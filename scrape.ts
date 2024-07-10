@@ -36,9 +36,8 @@ export async function scrape(url: string) {
         details: details,
         image: firstImage
     };
-    fs.writeFileSync('product-data.json', JSON.stringify(productData, null, 2));
+    fs.writeFileSync(productData.name, JSON.stringify(productData, null, 2));
     await browser.close();
-    console.log(browser.wsEndpoint());
     return productData;
 }
 scrape('https://www.abercrombie.com/shop/us/p/emerson-linen-blend-skort-56256822?categoryId=12265&faceout=life&seq=06');
