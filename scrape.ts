@@ -1,9 +1,8 @@
-require('dotenv').config();
 import puppeteer from "puppeteer";
 import fs from "fs";
 
 export async function scrape(url: string) {
-    const browser = await puppeteer.connect({browserWSEndpoint: 'ws://localhost:8080'}); // Pass an empty object as the options argument
+    const browser = await puppeteer.launch();
     const VIEWPORT = { width: 1920, height: 1080 };
     const page = await browser.newPage();
     await page.setViewport(VIEWPORT);
@@ -15,20 +14,20 @@ export async function scrape(url: string) {
     });
     const productName = await page.evaluate(() => {
         const h1 = document.querySelector('h1.product-title-main-header');
-        return h1?.textContent ?? "";
+        return h1?.textContent ?? "error: no product name found";
     });
     const price = await page.evaluate(() => {
         const discountPriceElement = document.querySelector('span.product-price-text[data-variant="discount"]');
         if (discountPriceElement) {
-            return discountPriceElement.textContent ?? "";
+            return discountPriceElement.textContent ?? "error: no price found";
         } else {
             const originalPriceElement = document.querySelector('span.product-price-text[data-variant="original"]');
-            return originalPriceElement?.textContent ?? "";
+            return originalPriceElement?.textContent ?? "error: no price found";
         }
     });
     const details = await page.evaluate(() => {
         const h1 = document.querySelector('div.details-accordion-mfe__description');
-        return h1?.textContent ?? "";
+        return h1?.textContent ?? "error: no details found";
     });
 
     const productData = {

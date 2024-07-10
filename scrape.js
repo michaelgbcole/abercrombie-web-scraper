@@ -19,23 +19,23 @@ async function scrape(url) {
     const productName = await page.evaluate(() => {
         var _a;
         const h1 = document.querySelector('h1.product-title-main-header');
-        return (_a = h1 === null || h1 === void 0 ? void 0 : h1.textContent) !== null && _a !== void 0 ? _a : "";
+        return (_a = h1 === null || h1 === void 0 ? void 0 : h1.textContent) !== null && _a !== void 0 ? _a : "error: no product name found";
     });
     const price = await page.evaluate(() => {
         var _a, _b;
         const discountPriceElement = document.querySelector('span.product-price-text[data-variant="discount"]');
         if (discountPriceElement) {
-            return (_a = discountPriceElement.textContent) !== null && _a !== void 0 ? _a : "";
+            return (_a = discountPriceElement.textContent) !== null && _a !== void 0 ? _a : "error: no price found";
         }
         else {
             const originalPriceElement = document.querySelector('span.product-price-text[data-variant="original"]');
-            return (_b = originalPriceElement === null || originalPriceElement === void 0 ? void 0 : originalPriceElement.textContent) !== null && _b !== void 0 ? _b : "";
+            return (_b = originalPriceElement === null || originalPriceElement === void 0 ? void 0 : originalPriceElement.textContent) !== null && _b !== void 0 ? _b : "error: no price found";
         }
     });
     const details = await page.evaluate(() => {
         var _a;
         const h1 = document.querySelector('div.details-accordion-mfe__description');
-        return (_a = h1 === null || h1 === void 0 ? void 0 : h1.textContent) !== null && _a !== void 0 ? _a : "";
+        return (_a = h1 === null || h1 === void 0 ? void 0 : h1.textContent) !== null && _a !== void 0 ? _a : "error: no details found";
     });
     const productData = {
         name: productName,

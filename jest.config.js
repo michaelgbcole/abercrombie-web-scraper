@@ -6,4 +6,8 @@ module.exports = {
     },
     testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
     setupFiles: ['./jest.setup.js'],
+    
+    globalSetup: "jest-environment-puppeteer/setup",
+    globalTeardown: "jest-environment-puppeteer/teardown",
+    
   };

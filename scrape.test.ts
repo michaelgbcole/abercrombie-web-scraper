@@ -8,7 +8,7 @@ describe('Web Scraper', () => {
         expect(data.price).not.toBe('error: no price found');
         expect(data.details).not.toBe('error: no details found');
         expect(data.image).not.toBe('error: no image found');
-    });
+    }, 10000);
     it('should handle an invalid URL gracefully', async () => {
         const url = 'https://www.invalid-url.com/';
         await expect(scrape(url)).rejects.toThrow();
